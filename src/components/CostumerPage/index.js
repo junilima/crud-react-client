@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useAuthContext } from '../../AuthContext'
 import { useApiCostumerByCpf } from '../../api/useApiCostumers'
 import { Container } from './styles'
 import Address from '../Address'
@@ -86,6 +87,7 @@ const CostumerPage = () => {
 
   const history = useHistory()
   const location = useLocation()
+  const { user } = useAuthContext()
   const isNew = location.pathname === '/costumers/new'
 
   const { cpf } = useParams()
@@ -155,13 +157,13 @@ const CostumerPage = () => {
             {!isNew && (
               <Button
                 className="del"
-                disabled={isSaving}
+                disabled={isSaving || !user?.admin}
                 onClick={handleDelete}
               >
                 Delete
               </Button>
             )}
-            <Button disabled={isSaving} onClick={handleSave}>
+            <Button disabled={isSaving || !user?.admin} onClick={handleSave}>
               {isNew ? 'Adicionar' : 'Save'}
             </Button>
           </DivRow>

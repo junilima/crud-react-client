@@ -30,7 +30,9 @@ const CostumersListPage = () => {
   return (
     <Container>
       <PageHeader>
-        <Button onClick={handleCreate}>Adicionar Cliente</Button>
+        <Button disabled={!auth?.user?.admin} onClick={handleCreate}>
+          Adicionar Cliente
+        </Button>
         <Button onClick={handleLogout}>Logout</Button>
       </PageHeader>
       <ul>
